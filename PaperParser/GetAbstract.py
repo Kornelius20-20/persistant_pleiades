@@ -55,11 +55,26 @@ class GetAbstract:
 
         # Find the abstract title and search for the paragraph tag corresponding
         # to the abstract
-        abs = soup.find_all(text='Abstract')
-        for tag in abs:
-            tag = tag.find_parent()
-            if tag.name != 'span':
-                paras = tag.find_parent().find('p')
+        headings = ['Abstract', 'ABSTRACT', 'Summary', 'SUMMARY']
+
+        for text in headings:
+            outer = False  # to break out of outer loop
+            # For each possible text in headings find if there are any paragraphs under it
+            abs = soup.find_all(text=text)
+
+            for tag in abs:
+
+                tag = tag.find_parent()  # Find the current tag name
+                if tag.name not in ('span', 'a'):  # These tags tend to give false results
+                    # Find a relavant paragraph that hopefully has the abstract
+                    paras = tag.find_parent().find('p')
+
+                if paras is not None:
+                    outer = True
+                    break
+
+            if outer:
+                break
 
         if paras is not None:
             return paras.text

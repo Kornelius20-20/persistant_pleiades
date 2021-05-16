@@ -8,11 +8,10 @@ A python console app that uses scholarly to access academic paperss via google s
 """
 
 import subprocess,sys
-from GetAbstract import GetAbstract
 import pip
 
 version = '1.0'
-packages = set('scholarly','selenium')
+package = 'scholarly'
 
 def _check_req(package):
     """
@@ -33,6 +32,7 @@ keywords = "Primate Hox"
 def get_paper_info(keywords,num_results = 20):
 
     from scholarly import scholarly
+    from GetAbstract import GetAbstract
     # Search based on keywords and return a list of results
     search_query = scholarly.search_pubs(keywords)
 
@@ -62,8 +62,7 @@ def intro():
     return [mode,results]
 
 if __name__ == '__main__':
-    for package in packages:
-        _check_req(package)
+    _check_req(package)
     keywords = intro()
     get_paper_info(keywords[0],keywords[1])
     input()

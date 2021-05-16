@@ -23,7 +23,7 @@ class GetAbstract:
 
             options = OptionsFirefox()
             options.add_argument('--headless')
-            driverpath = os.path.join(os.getcwd(), "webdriver\\geckodriver.exe")
+            driverpath = os.path.join(os.getcwd(), "webdriver","geckodriver.exe")
 
             self.driver = webdriver.Firefox(executable_path=driverpath, options=options)
 
@@ -34,7 +34,7 @@ class GetAbstract:
 
             options = OptionsChrome()
             options.add_argument('--headless')
-            driverpath = os.path.join(os.getcwd(), "webdriver\\chromedriver.exe")
+            driverpath = os.path.join(os.getcwd(), "webdriver","chromedriver.exe")
 
             try:
                 self.driver = webdriver.Chrome(executable_path=driverpath, options=options)

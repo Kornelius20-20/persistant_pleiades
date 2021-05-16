@@ -11,11 +11,11 @@ import subprocess,sys
 import pip
 
 version = '1.0'
-package = 'scholarly'
+packages = ['scholarly','requests-html']
 
 def _check_req(package):
     """
-    Method to Check to see if scholarly is installed and if not try to install it
+    Method to Check to see if scholarly and requests-html is installed and if not try to install it
     """
     # Get installed packages and put them into a list
     reqs = subprocess.check_output([sys.executable, "-m", "pip", "freeze"])
@@ -24,7 +24,7 @@ def _check_req(package):
     # Check list for scholarly and attempt to install if not in it
     if package not in installed_packages:
         # subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-        pip.main(['install', package])
+        pip.main(['install','-m', package])
 
 # Testing
 keywords = "Primate Hox"
@@ -36,7 +36,7 @@ def get_paper_info(keywords,num_results = 20):
     # Search based on keywords and return a list of results
     search_query = scholarly.search_pubs(keywords)
 
-    # Create a new webdriver from GetAbstracts to get the abstract files fully
+    # Create a new HTML session from GetAbstracts to get the abstract files fully
     abstract = GetAbstract()
 
     for num in range(num_results):
@@ -47,8 +47,6 @@ def get_paper_info(keywords,num_results = 20):
         print('url:\n ', query['pub_url'])
         print('\n')
 
-    # Close webdriver
-    abstract.driver_quit()
 
 def intro():
     print(f'\t\twelcome to paper parser version {version}!')
@@ -62,7 +60,8 @@ def intro():
     return [mode,results]
 
 if __name__ == '__main__':
-    _check_req(package)
+    for package in packages:
+        _check_req(package)
     keywords = intro()
     get_paper_info(keywords[0],keywords[1])
     input()

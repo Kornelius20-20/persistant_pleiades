@@ -11,8 +11,9 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 import os
 
+
 class GetAbstract:
-    driver = None # Variable to hold the webdriver
+    driver = None  # Variable to hold the webdriver
 
     def __init__(self):
         try:
@@ -36,14 +37,14 @@ class GetAbstract:
             driverpath = os.path.join(os.getcwd(), "webdriver\\chromedriver.exe")
 
             try:
-                self.driver = webdriver.Chrome(executable_path=driverpath,options=options)
+                self.driver = webdriver.Chrome(executable_path=driverpath, options=options)
             except WebDriverException:
 
                 # Raise an error if neither browser is present
                 raise WebDriverException("There are no compatible browsers installed. Please"
                                          "install either Firefox or Chrome")
 
-    def getAbstract(self,url) -> str:
+    def getAbstract(self, url) -> str:
         # Make the webdriver the active webdriver created at init
         driver = self.driver
         paras = None  # Variable to hold abstract paragraph
@@ -51,7 +52,7 @@ class GetAbstract:
         # Get URL and extract page source to make soup with
         driver.get(url)
         page = driver.page_source
-        soup = BeautifulSoup(page,'html.parser')
+        soup = BeautifulSoup(page, 'html.parser')
 
         # Find the abstract title and search for the paragraph tag corresponding
         # to the abstract
@@ -83,6 +84,7 @@ class GetAbstract:
 
     def driver_quit(self) -> None:
         self.driver.quit()
+
 
 if __name__ == '__main__':
     # Test url

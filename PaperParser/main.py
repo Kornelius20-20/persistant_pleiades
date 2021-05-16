@@ -9,9 +9,10 @@ A python console app that uses scholarly to access academic paperss via google s
 
 import subprocess,sys
 from GetAbstract import GetAbstract
+import pip
 
 version = '1.0'
-package = 'scholarly'
+packages = set('scholarly','selenium')
 
 def _check_req(package):
     """
@@ -23,7 +24,8 @@ def _check_req(package):
 
     # Check list for scholarly and attempt to install if not in it
     if package not in installed_packages:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        # subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        pip.main(['install', package])
 
 # Testing
 keywords = "Primate Hox"
@@ -60,7 +62,8 @@ def intro():
     return [mode,results]
 
 if __name__ == '__main__':
-    _check_req(package)
+    for package in packages:
+        _check_req(package)
     keywords = intro()
     get_paper_info(keywords[0],keywords[1])
     input()
